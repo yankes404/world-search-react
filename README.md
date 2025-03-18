@@ -4,7 +4,7 @@ A simple React application that allows users to search for countries by name and
 
 ## Live Preview
 
-[Live Demo](#) *(Currently an empty link)*
+[Live Demo](https://world-search-react.vercel.app)
 
 ## Features
 
