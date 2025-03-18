@@ -1,18 +1,21 @@
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useMemo, useState } from "react";
 import { LoaderIcon } from "lucide-react";
 
-import { Country, Region, ResponseCountry } from "./types";
+import { Region } from "./types";
 import { useDebounce } from "./hooks/use-debounce";
 import { CountryCard } from "./components/country-card";
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
-import { ALL_REGIONS, API_URL } from "./constants";
+import { ALL_REGIONS } from "./constants";
+import { useCountries } from "./hooks/use-countries";
+import { useSearch } from "./hooks/use-search";
 
 export const App = () => {
-    const [countiers, setCountries] = useState<Country[]>([]);
-    const [isPending, startTransition] = useTransition();
-
-    const [error, setError] = useState(false);
+    const {
+        countries,
+        error,
+        isPending
+    } = useCountries();
 
     const [searchValue, setSearchValue] = useState("");
     const debouncedSearch = useDebounce(searchValue);
@@ -21,27 +24,11 @@ export const App = () => {
 
     const handleRegionClick = (region: Region) => setRegions((prev) => prev.includes(region) ? prev.filter(r => r !== region) : [...prev, region]);
 
-    const searchedCountries = useMemo(() => 
-        countiers.filter((country) => country.name.toLowerCase().includes(debouncedSearch.toLowerCase()) && regions.includes(country.region)),
-    [countiers, debouncedSearch, regions]);
-
-    useEffect(() => {
-        startTransition(() => {
-            fetch(API_URL)  
-                .then((res) => res.json())
-                .then((data) => setCountries(
-                    data.map((country: ResponseCountry) => ({
-                        name: country.name.common,
-                        region: country.region as Region,
-                        capitalCity: country.capital,
-                        population: country.population,
-                        flagUrl: country.flags.svg,
-                        googleMaps: country.maps.googleMaps
-                    }) as Country)
-                ))
-                .catch(() => setError(true))
-        });
-    }, []);
+    const searchedCountries = useSearch(
+        countries,
+        { search: debouncedSearch, regions },
+        ((country, { search, regions }) => country.name.toLowerCase().includes(search.toLowerCase()) && regions.includes(country.region))
+    );
 
     return (
         <div className="flex flex-col min-h-screen">
