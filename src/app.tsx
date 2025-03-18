@@ -1,21 +1,12 @@
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { LoaderIcon, SearchIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 
 import { Country, Region, ResponseCountry } from "./types";
 import { useDebounce } from "./hooks/use-debounce";
-import { Input } from "./components/ui/input";
 import { CountryCard } from "./components/country-card";
-import { cn } from "./lib/utils";
-
-const API_URL = "https://restcountries.com/v3.1/all";
-const ALL_REGIONS = [
-    Region.AFRICA,
-    Region.AMERICAS,
-    Region.ANTARCTIC,
-    Region.ASIA,
-    Region.EUROPE,
-    Region.OCEANIA
-]
+import { Footer } from "./components/footer";
+import { Header } from "./components/header";
+import { ALL_REGIONS, API_URL } from "./constants";
 
 export const App = () => {
     const [countiers, setCountries] = useState<Country[]>([]);
@@ -53,41 +44,15 @@ export const App = () => {
     }, []);
 
     return (
-        <>
-            <div className="w-full bg-gray-100 flex flex-col items-center gap-6">
-                <header className="p-6">
-                    <h2 className="text-lg font-bold">
-                        WorldSearch
-                    </h2>
-                </header>
-                <div className="pb-12 flex flex-col gap-2.5 w-full max-w-[600px] px-8">
-                    <div className="w-full relative">
-                            <SearchIcon
-                                className="size-4 text-neutral-600 absolute top-1/2 left-4 -translate-y-1/2"
-                            />
-                            <Input
-                                type="search"
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.currentTarget.value)}
-                                placeholder="Search by country name..."
-                                className="ps-10"
-                                disabled={isPending}
-                            />
-                        </div>
-                    <div className="w-full grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
-                        {ALL_REGIONS.map((region) => (
-                            <button
-                                onClick={() => handleRegionClick(region)}
-                                className={cn("capitalize py-1 px-3 rounded-md font-semibold text-sm shadow w-full transition cursor-pointer disabled:pointer-events-none disabled:opacity-50", regions.includes(region) ? "bg-black text-white" : "border border-neutral-200 hover:bg-neutral-200")}
-                                disabled={isPending}
-                            >
-                                {region}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            <div className="mt-8 w-full px-8 md:px-12 lg:px-16 xl:px-24">
+        <div className="flex flex-col min-h-screen">
+            <Header
+                searchValue={searchValue}
+                onSearchValueChange={setSearchValue}
+                isPending={isPending}
+                selectedRegions={regions}
+                onRegionClick={handleRegionClick}
+            />
+            <main className="mt-8 w-full px-8 md:px-12 lg:px-16 xl:px-24 flex-grow">
                 {isPending ? (
                     <LoaderIcon className="size-4 text-neutral-600 animate-spin mx-auto" />
                 ) : error ? (
@@ -111,15 +76,8 @@ export const App = () => {
                         No countries
                     </p>
                 )}
-            </div>
-            <footer className="mt-12 p-4 w-screen bg-gray-100 text-sm font-medium text-neutral-600 flex justify-between items-center gap-4">
-                <p>
-                    WorldSearch. Open-Source project ,&nbsp;<a href="#" className="text-black hover:underline">visit GitHub repository</a>
-                </p>
-                <p>
-                    Created by <a href="#" className="text-black hover:underline">yankes404</a>
-                </p>
-            </footer>
-        </>
+            </main>
+            <Footer />
+        </div>
     )
 }
