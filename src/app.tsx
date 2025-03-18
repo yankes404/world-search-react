@@ -114,7 +114,7 @@ export const App = () => {
             </div>
             <footer className="mt-12 p-4 w-screen bg-gray-100 text-sm font-medium text-neutral-600 flex justify-between items-center gap-4">
                 <p>
-                    WorldSearch. Open-Source project,&nbsp;<a href="#" className="text-black hover:underline">visit GitHub repository</a>
+                    WorldSearch. Open-Source project ,&nbsp;<a href="#" className="text-black hover:underline">visit GitHub repository</a>
                 </p>
                 <p>
                     Created by <a href="#" className="text-black hover:underline">yankes404</a>
