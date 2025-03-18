@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { LoaderIcon } from "lucide-react";
 
 import { Region } from "./types";
