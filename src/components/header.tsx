@@ -45,7 +45,7 @@ export const Header = ({
             {Array.isArray(selectedRegions) && (
                 <ul className="w-full grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
                     {ALL_REGIONS.map((region) => (
-                        <li>
+                        <li key={region}>
                             <RegionButton
                                 name={region}
                                 isSelected={selectedRegions.includes(region)}

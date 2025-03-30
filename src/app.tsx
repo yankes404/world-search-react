@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { parseAsArrayOf, parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
 
 import { Region } from "./types";
 import { useDebounce } from "./hooks/use-debounce";
@@ -18,10 +19,16 @@ export const App = () => {
         isPending
     } = useCountries();
 
-    const [searchValue, setSearchValue] = useState("");
+    const [searchValue, setSearchValue] = useQueryState(
+        "q",
+        parseAsString.withDefault("")
+    );
     const debouncedSearch = useDebounce(searchValue);
 
-    const [selectedRegions, setSelectedRegions] = useState<Region[]>(ALL_REGIONS);
+    const [selectedRegions, setSelectedRegions] = useQueryState<Region[]>(
+        "regions",
+        parseAsArrayOf(parseAsStringEnum(ALL_REGIONS)).withDefault(ALL_REGIONS)
+    );
 
     const handleRegionClick = (region: Region) => setSelectedRegions((prev) => prev.includes(region) ? prev.filter(r => r !== region) : [...prev, region]);
 
