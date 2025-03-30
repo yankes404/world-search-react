@@ -1,4 +1,5 @@
 import type { Country as Props } from "../types";
+import { CountryImage } from "./country-image";
 
 export const CountryCard = ({
     name,
@@ -11,15 +12,14 @@ export const CountryCard = ({
     <a
         href={googleMaps}
         target="_blank"
-        className="p-3 rounded-lg border border-neutral-200 shadow-sm flex flex-col justify-center gap-2 hover:opacity-80 transition overflow-hidden"
+        className="p-3 h-full rounded-lg border border-neutral-200 shadow-sm flex flex-col gap-2 hover:opacity-80 transition overflow-hidden"
     >
-        <img
-            src={flagUrl}
-            alt={`Flag of ${name}`}
-            className="w-full h-24 object-cover object-center rounded-lg"
+        <CountryImage
+            url={flagUrl}
+            name={name}
         />
         <div className="w-full">
-            <h3 className="font-semibold">
+            <h3 className="font-semibold line-clamp-2 break-words">
                 {name}
                 <span className="text-xs text-neutral-600 ml-1">
                     ({capitalCity})

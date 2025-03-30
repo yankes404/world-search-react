@@ -14,7 +14,7 @@ export const CountryList = ({ countries }: Props) => {
             </Hint>
             <ul className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
                 {countries.map((country, key) => (
-                    <li>
+                    <li className="h-full">
                         <CountryCard
                             key={key}
                             {...country}
