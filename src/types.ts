@@ -1,11 +1,6 @@
-export enum Region {
-    ANTARCTIC = "Antarctic",
-    AMERICAS = "Americas",
-    EUROPE = "Europe",
-    AFRICA = "Africa",
-    ASIA = "Asia",
-    OCEANIA = "Oceania",
-}
+import { ALL_REGIONS } from "./constants";
+
+export type Region = (typeof ALL_REGIONS)[number];
 
 export type Country = {
     name: string;
