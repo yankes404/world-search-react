@@ -43,16 +43,18 @@ export const Header = ({
                 </div>
             )}
             {Array.isArray(selectedRegions) && (
-                <div className="w-full grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
+                <ul className="w-full grid gap-1 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6">
                     {ALL_REGIONS.map((region) => (
-                        <RegionButton
-                            name={region}
-                            isSelected={selectedRegions.includes(region)}
-                            disabled={isPending}
-                            onClick={onRegionClick ? () => onRegionClick(region) : undefined}
-                        />
+                        <li>
+                            <RegionButton
+                                name={region}
+                                isSelected={selectedRegions.includes(region)}
+                                disabled={isPending}
+                                onClick={onRegionClick ? () => onRegionClick(region) : undefined}
+                            />
+                        </li>
                     ))}
-                </div>
+                </ul>
             )}
         </div>
     </header>
