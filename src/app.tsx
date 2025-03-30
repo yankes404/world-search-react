@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { parseAsArrayOf, parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
 
 import { Region } from "./types";
